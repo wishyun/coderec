@@ -431,12 +431,13 @@ function thissubmit(thiss){
 							$(".custom_option_attr").each(function(){
 								attr = $(this).attr("atr");
 								val = $(this).val();
+								/*
 								if(!val){
 									i = 1;
-									alert("select can not empty");
-								}
+									alert("选项不能为空！");
+								}*/
 								$str += '<td rel="'+attr+'">'+val+'</td>';
-								val = val.replace(" ", "*")
+								val = val.replace(" ", "")
 								if(!general_sku){
 									general_sku = val;
 								}else{
