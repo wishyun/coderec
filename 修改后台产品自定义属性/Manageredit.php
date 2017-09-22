@@ -123,6 +123,8 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                             $str .= '<option value="'.$k.'">'.$v.'</option>';
                         }
                         $str .= '</select>';
+                    }elseif($type == 'inputString'){
+                        $str .= '<input atr="'.$attr.'" style="width:40px;" type="text" class="custom_option_attr textInput valid" value="">';
                     }
                     $str .= '</div>';
                 }
@@ -425,10 +427,12 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         $custom_option = $custom_option ? json_decode($custom_option, true) : [];
         $custom_option_arr = [];
         if (is_array($custom_option) && !empty($custom_option)) {
+			$i=1;
             foreach ($custom_option as $one) {
                 $one['qty'] = (int) $one['qty'];
                 $one['price'] = (float) $one['price'];
-                $custom_option_arr[$one['sku']] = $one;
+                $custom_option_arr[$i.$one['sku']] = $one;
+				$i++;
             }
         }
         $this->_param['custom_option'] = $custom_option_arr;
