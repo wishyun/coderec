@@ -430,12 +430,18 @@ function thissubmit(thiss){
 							general_sku = '';
 							$(".custom_option_attr").each(function(){
 								attr = $(this).attr("atr");
-								val = $(this).val();
+								val = $(this).val().replace(/\s+/g, "");
 								/*
 								if(!val){
 									i = 1;
 									alert("选项不能为空！");
 								}*/
+								var myReg = /^[a-zA-Z0-9_]{0,}$/;
+								if (!myReg.test(val)) {
+									i = 1;
+									alert("仅能使用英文或数字！"+val);
+								}
+
 								$str += '<td rel="'+attr+'">'+val+'</td>';
 								val = val.replace(" ", "")
 								if(!general_sku){
