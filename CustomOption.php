@@ -92,6 +92,15 @@ class CustomOption
                             }
                         }
                     }
+                }elseif(isset($info['display']['type']) && ($info['display']['type'] == 'inputString')) {
+                        foreach($my_arr[$attr] as $key=>$val){
+                            $t_arr = [
+                                  'key' => $val,
+                                  'val' => $val,
+                            ];
+                            $arr[$attr]['info'][] = $t_arr;
+                            $arr[$attr]['require'] = $require;
+                        }
                 }
             }
         }
