@@ -5,6 +5,7 @@
  * @link http://www.fecshop.com/
  * @copyright Copyright (c) 2016 FecShop Software LLC
  * @license http://www.fecshop.com/license/
+ * @fecshop\app\appfront\modules\Catalog\block\product\CustomOption.php
  */
 
 namespace fecshop\app\appfront\modules\Catalog\block\product;
@@ -91,6 +92,15 @@ class CustomOption
                             }
                         }
                     }
+                }elseif(isset($info['display']['type']) && ($info['display']['type'] == 'inputString')) {
+                        foreach($my_arr[$attr] as $key=>$val){
+                            $t_arr = [
+                                  'key' => $val,
+                                  'val' => $val,
+                            ];
+                            $arr[$attr]['info'][] = $t_arr;
+                            $arr[$attr]['require'] = $require;
+                        }
                 }
             }
         }
