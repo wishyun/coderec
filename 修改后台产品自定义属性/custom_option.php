@@ -5,6 +5,7 @@
  * @link http://www.fecshop.com/
  * @copyright Copyright (c) 2016 FecShop Software LLC
  * @license http://www.fecshop.com/license/
+ * @theme\terry\theme01\catalog\product\index\custom_option.php
  */
 ?>
 <?php	if(is_array($items) && !empty($items)):  ?>
@@ -16,7 +17,7 @@
 			<div class="pg">
 				<div class="label"><?= Yii::$service->page->translate->__(ucwords(str_replace("-"," ",str_replace("_"," ",$attr))).':'); ?></div>
 				<div class="chose_<?= $attr  ?> rg  <?= $attr ?>">
-					<ul  class="no_chosen_ul <?= $required; ?>" attr="<?= $attr ?>">
+					<ul  class="cusul no_chosen_ul <?= $required; ?>" attr="<?= $attr ?>">
 						<?php  			if(is_array($info) && !empty($info)): ?>
 							<?php  				foreach($info as $one): ?>
 								<?php					$val 		= $one['val'];  ?>
@@ -48,8 +49,24 @@
 	<?php $this->beginBlock('product_custom_option') ?>
 	$(document).ready(function(){
 		custom_option_arr = <?= $custom_option_arr ?>;
-		$(".product_custom_options ul li a").click(function(){
-			if(!$(this).hasClass('no_active')){
+		$(".product_custom_options ul li a").click(function() {
+			/*********************************/
+			if ($(this).hasClass('current')) {
+				//sel = $(this).parent().parent();
+				$sel = $(".cusul");
+				$sel.find("a").removeClass("current");
+				$sel.find("a").removeClass("no_active");
+				$sel.find("a").addClass("active_v");
+				$sel.find("li").removeClass("current");
+				$sel.removeClass("chosen_ul");
+				$sel.addClass("no_chosen_ul");
+				$(this).removeClass("current");
+				$chosen_attr = [];
+				$c_arr = [];
+				custom_option_sku = [];
+			} else {
+			/*********************************/
+			if (!$(this).hasClass('no_active')) {
 				$chosen_custom_option_arr = [];
 				$(this).parent().parent().find("a").removeClass("current");
 				$(this).parent().parent().find("li").removeClass("current");
@@ -60,24 +77,25 @@
 				$chosen_attr = [];
 				// custom option 被选择的部分的处理 - 开始
 				$c_arr = [];
-				$c_chosen_custom_option_arr = new Object();;
-				$(".product_custom_options ul li a.current").each(function(){
+				$c_chosen_custom_option_arr = new Object();
+				;
+				$(".product_custom_options ul li a.current").each(function () {
 					attr = $(this).attr('attr');
-					val  = $(this).attr('value');
+					val = $(this).attr('value');
 
-					for(x in custom_option_arr){
+					for (x in custom_option_arr) {
 						one = custom_option_arr[x];
 						i = 1;
-						$(".product_custom_options ul li a.current").each(function(){
+						$(".product_custom_options ul li a.current").each(function () {
 							attr2 = $(this).attr('attr');
-							val2  = $(this).attr('value');
+							val2 = $(this).attr('value');
 							//alert(attr+"###"+val);
-							if((attr != attr2) && (one[attr2] != val2)){
+							if ((attr != attr2) && (one[attr2] != val2)) {
 								i = 0;
 							}
 						});
-						if(i){
-							if($c_chosen_custom_option_arr[attr] == undefined){
+						if (i) {
+							if ($c_chosen_custom_option_arr[attr] == undefined) {
 								$c_chosen_custom_option_arr[attr] = [];
 							}
 							$c_chosen_custom_option_arr[attr].push(one);
@@ -87,17 +105,18 @@
 
 				// 每一个属性对应的允许的值，的出来，譬如 color 允许 red white等
 				c_my_arr = new Object();
-				for(attr in $c_chosen_custom_option_arr){
+				for (attr in $c_chosen_custom_option_arr) {
 					//alert(attr);
-					if(c_my_arr[attr] == undefined){
-						c_my_arr[attr] = new Object();;
+					if (c_my_arr[attr] == undefined) {
+						c_my_arr[attr] = new Object();
+						;
 					}
 					arr = $c_chosen_custom_option_arr[attr];
-					for(x in arr){
+					for (x in arr) {
 						one = arr[x];
-						for(y in one){
+						for (y in one) {
 							//alert(one[y]);
-							if(c_my_arr[attr][y] == undefined){
+							if (c_my_arr[attr][y] == undefined) {
 								c_my_arr[attr][y] = [];
 							}
 							//alert(attr+"##"+y);
@@ -106,16 +125,16 @@
 					}
 				}
 
-				$(".product_custom_options ul.chosen_ul").each(function(){
+				$(".product_custom_options ul.chosen_ul").each(function () {
 					attr = $(this).attr('attr');
-					$(this).find("li a").each(function(){
+					$(this).find("li a").each(function () {
 						val = $(this).attr('value');
 						//alert(val);
 						//alert(my_arr[attr]);
-						if($.inArray(val, c_my_arr[attr][attr]) > -1){
+						if ($.inArray(val, c_my_arr[attr][attr]) > -1) {
 							$(this).removeClass('no_active');
 							$(this).addClass('active_v');
-						}else{
+						} else {
 							//alert(val);
 							//alert(222);
 							$(this).addClass('no_active');
@@ -126,29 +145,29 @@
 
 				});
 
-				for(x in custom_option_arr){
+				for (x in custom_option_arr) {
 					one = custom_option_arr[x];
 					i = 1;
-					$(".product_custom_options ul li a.current").each(function(){
+					$(".product_custom_options ul li a.current").each(function () {
 						attr = $(this).attr('attr');
-						val  = $(this).attr('value');
+						val = $(this).attr('value');
 						//alert(attr+"###"+val);
-						if(one[attr] != val){
+						if (one[attr] != val) {
 							i = 0;
 						}
 					});
-					if(i){
+					if (i) {
 						$chosen_custom_option_arr.push(one);
 					}
 
 				}
 				//alert(1);
 				my_arr = new Object();
-				for(x in $chosen_custom_option_arr){
+				for (x in $chosen_custom_option_arr) {
 					one = $chosen_custom_option_arr[x];
-					for(y in one){
+					for (y in one) {
 						//alert(one[y]+"###"+y);
-						if(my_arr[y] == undefined){
+						if (my_arr[y] == undefined) {
 							my_arr[y] = [];
 						}
 						//alert(y+"__"+one[y]);
@@ -157,16 +176,16 @@
 
 				}
 
-				$(".product_custom_options ul.no_chosen_ul").each(function(){
+				$(".product_custom_options ul.no_chosen_ul").each(function () {
 					attr = $(this).attr('attr');
-					$(this).find("li a").each(function(){
+					$(this).find("li a").each(function () {
 						val = $(this).attr('value');
 						//alert(val);
 						//alert(my_arr[attr]);
-						if($.inArray(val, my_arr[attr]) > -1){
+						if ($.inArray(val, my_arr[attr]) > -1) {
 							$(this).removeClass('no_active');
 							$(this).addClass('active');
-						}else{
+						} else {
 							//alert(val);
 							//alert(222);
 							$(this).addClass('no_active');
@@ -178,51 +197,53 @@
 				});
 				// 如果全部选择完成，需要到ajax请求，得到最后的价格
 				i = 1;
-				$(".product_custom_options .pg .rg ul.required").each(function(){
+				$(".product_custom_options .pg .rg ul.required").each(function () {
 					val = $(this).find("li.current a.current").attr("value");
-					attr  = $(this).find("li.current a.current").attr("attr");
-					if(!val){
+					attr = $(this).find("li.current a.current").attr("attr");
+					if (!val) {
 						i = 0;
 					}
 				});
-				if(i){
-					for(x in custom_option_arr){
+				if (i) {
+					for (x in custom_option_arr) {
 						one = custom_option_arr[x];
 						j = 1;
-						$(".product_custom_options .pg .rg ul.required").each(function(){
+						$(".product_custom_options .pg .rg ul.required").each(function () {
 							val = $(this).find("li.current a.current").attr("value");
-							attr  = $(this).find("li.current a.current").attr("attr");
-							if(one[attr] != val){
+							attr = $(this).find("li.current a.current").attr("attr");
+							if (one[attr] != val) {
 								j = 0;
 								//break;
 							}
 						});
-						if(j){
+						if (j) {
 							getCOUrl = "<?= Yii::$service->url->getUrl('catalog/product/getcoprice'); ?>";
 							custom_option_sku = one['sku'];
 							product_id = "<?=  $product_id ?>";
 							qty = $(".qty").val();
 							$data = {
-								custom_option_sku:custom_option_sku,
-								qty:qty,
-								product_id:product_id
+								custom_option_sku: custom_option_sku,
+								qty: qty,
+								product_id: product_id
 							};
 							jQuery.ajax({
-								async:true,
+								async: true,
 								timeout: 6000,
 								dataType: 'json',
-								type:'get',
+								type: 'get',
 								data: $data,
-								url:getCOUrl,
-								success:function(data, textStatus){
+								url: getCOUrl,
+								success: function (data, textStatus) {
 									$(".price_info").html(data.price);
 								},
-								error:function (XMLHttpRequest, textStatus, errorThrown){}
+								error: function (XMLHttpRequest, textStatus, errorThrown) {
+								}
 							});
 						}
 					}
 				}
 			}
+		    }
 		});
 	});
 	<?php $this->endBlock(); ?>
