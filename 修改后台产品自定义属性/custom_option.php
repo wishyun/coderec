@@ -52,7 +52,7 @@
 		$(".product_custom_options ul li a").click(function() {
 			/*********************************/
 			if ($(this).hasClass('current')) {
-				//sel = $(this).parent().parent();
+				//$sel = $(this).parent().parent();
 				$sel = $(".cusul");
 				$sel.find("a").removeClass("current");
 				$sel.find("a").removeClass("no_active");
