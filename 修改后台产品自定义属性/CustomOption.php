@@ -93,14 +93,17 @@ class CustomOption
                         }
                     }
                 }elseif(isset($info['display']['type']) && ($info['display']['type'] == 'inputString')) {
-                        foreach($my_arr[$attr] as $key=>$val){
-							$require = isset($info['require']) ? $info['require'] : 0;
-                            $t_arr = [
-                                  'key' => $val,
-                                  'val' => $val,
-                            ];
-                            $arr[$attr]['info'][] = $t_arr;
-                            $arr[$attr]['require'] = $require;
+						$my_arr2 = array_unique($my_arr[$attr]);
+                        foreach($my_arr2 as $key=>$val){
+							if (is_array($my_arr2) && !empty($val)) {
+								$require = isset($info['require']) ? $info['require'] : 0;
+								$t_arr = [
+									  'key' => $val,
+									  'val' => $val,
+								];
+								$arr[$attr]['info'][] = $t_arr;
+								$arr[$attr]['require'] = $require;
+							}
                         }
                 }
             }
