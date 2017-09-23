@@ -106,7 +106,7 @@ return [
                                     'display' => [
                                           'type' => 'inputString',
                                     ],
-                                    'require' => 0,  // 1代表是必填选项，0代表选填
+                                    'require' => 1,  // 1代表是必填选项，0代表选填
                               ],
                               //款式
                               'my_style'      => [
@@ -117,14 +117,14 @@ return [
                                     'display' => [
                                           'type' => 'inputString',
                                     ],
-                                    'require' => 0,  // 1代表是必填选项，0代表选填
+                                    'require' => 1,  // 1代表是必填选项，0代表选填
                               ],
                               //尺寸
                               'my_size'      => [
                                     'dbtype'     => 'String',
                                     'label'      => 'My Size',
                                     'name'       => 'size',
-                                    'require'    => 0,
+                                    'require'    => 1,
                                     'display'    => [
                                           'type'    => 'select',
                                           'data'    => [
@@ -147,7 +147,7 @@ return [
                                     'name'      => 'color',      // 在数据库中存在的列名
                                     'showAsImg' => true,  // （在前端展示部分）通过图片的方式展示属性。譬如；http://fecshop.appfront.fancyecommerce.com/index.php/reindeer-pattern-glitter-christmas-dress-86519596，
                                     //		你会发现，该属性对应的显示方式不是值，而是产品的图片。
-                                    'require' => 0,  // 1代表是必填选项，0代表选填
+                                    'require' => 1,  // 1代表是必填选项，0代表选填
                                     'display' => [
                                           'type' => 'select',
                                           'data' => [

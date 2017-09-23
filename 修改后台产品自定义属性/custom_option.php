@@ -51,7 +51,7 @@
 	$(document).ready(function(){
 		custom_option_arr = <?= $custom_option_arr ?>;
 		$(".product_custom_options ul li a").click(function() {
-			/*********************************/
+			/****************再次点击取消选中选项*****************/
 			if ($(this).hasClass('current')) {
 				//$sel = $(this).parent().parent();
 				$sel = $(".cusul");
@@ -66,7 +66,7 @@
 				$c_arr = [];
 				custom_option_sku = [];
 			} else {
-			/*********************************/
+				/****************再次点击取消选中选项*****************/
 			if (!$(this).hasClass('no_active')) {
 				$chosen_custom_option_arr = [];
 				$(this).parent().parent().find("a").removeClass("current");
