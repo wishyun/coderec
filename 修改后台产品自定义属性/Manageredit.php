@@ -5,6 +5,7 @@
  * @link http://www.fecshop.com/
  * @copyright Copyright (c) 2016 FecShop Software LLC
  * @license http://www.fecshop.com/license/
+ * @fecshop\app\appadmin\modules\Catalog\block\productinfo\Manageredit.php
  */
 
 namespace fecshop\app\appadmin\modules\Catalog\block\productinfo;
@@ -120,7 +121,12 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                     if ($type == 'select' && is_array($data) && !empty($data)) {
                         $str .= '<select atr="'.$attr.'" class="custom_option_attr">';
                         foreach ($info['display']['data'] as $k=>$v) {
-                            $str .= '<option value="'.$k.'">'.$v.'</option>';
+                            if($k=='none' || $v=='none'){
+                                $str .= '<option value="">不填写</option>';
+                            }else{
+                                $str .= '<option value="'.$k.'">'.$v.'</option>';
+                            }
+
                         }
                         $str .= '</select>';
                     }elseif($type == 'inputString'){
@@ -399,6 +405,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                 //exit;
             }
         }
+
         $this->_service->save($this->_param, 'catalog/product/index');
         
         $errors = Yii::$service->helper->errors->get();
@@ -423,18 +430,24 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         $this->_param = $request_param[$this->_editFormData];
         $this->_param['attr_group'] = CRequest::param('attr_group');
         $custom_option = CRequest::param('custom_option');
-        //var_dump($custom_option);
+        //var_dump($custom_option);exit;
         $custom_option = $custom_option ? json_decode($custom_option, true) : [];
+        //var_dump($custom_option);exit;
         $custom_option_arr = [];
         if (is_array($custom_option) && !empty($custom_option)) {
+
             foreach ($custom_option as $one) {
                 $one['qty'] = (int) $one['qty'];
                 $one['price'] = (float) $one['price'];
-                $custom_option_arr[$one['sku']] = $one;
+                $custom_option_arr[$one['sku']] = $one; //通过SKU定义选项的名称
+
             }
         }
-        $this->_param['custom_option'] = $custom_option_arr;
-        //var_dump($this->_param['custom_option']);
+        //var_dump($custom_option_arr);exit;
+        $this->_param['custom_option'] = array_filter($custom_option_arr);
+
+        //var_dump($this->_param['custom_option']);exit;
+
         $image_gallery = CRequest::param('image_gallery');
         $image_main = CRequest::param('image_main');
         $save_gallery = [];
@@ -598,7 +611,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         if (!$errors) {
             echo  json_encode([
                 'statusCode'=>'200',
-                'message'=>'remove data  success',
+                'message'=>'remove data success',
             ]);
             exit;
         } else {
