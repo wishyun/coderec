@@ -5,6 +5,7 @@
  * @link http://www.fecshop.com/
  * @copyright Copyright (c) 2016 FecShop Software LLC
  * @license http://www.fecshop.com/license/
+ * @fecshop\app\appadmin\modules\Catalog\block\productinfo\Manageredit.php
  */
 
 namespace fecshop\app\appadmin\modules\Catalog\block\productinfo;
@@ -120,9 +121,15 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                     if ($type == 'select' && is_array($data) && !empty($data)) {
                         $str .= '<select atr="'.$attr.'" class="custom_option_attr">';
                         foreach ($info['display']['data'] as $k=>$v) {
-                            $str .= '<option value="'.$k.'">'.$v.'</option>';
+                            if($k=='none' || $v=='none'){
+                                $str .= '<option value="">不填写</option>';
+                            }else{
+                                $str .= '<option value="'.$k.'">'.$v.'</option>';
+                            }
                         }
                         $str .= '</select>';
+                    }elseif($type == 'inputString'){
+                        $str .= '<input atr="'.$attr.'" style="width:120px;" type="text" class="custom_option_attr textInput valid" value="">';
                     }
                     $str .= '</div>';
                 }
@@ -130,7 +137,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
 						<div class="nps"><span>Qty:</span><input style="width:40px;" type="text" class="custom_option_qty"  value="" /></div>
 						<div class="nps"><span>Price:</span><input  style="width:40px;" type="text" class="custom_option_price"  value="" /></div>
 						<div class="nps" style="width:220px;"><a class=" button chose_custom_op_img" style="display: block;float: left; margin: -2px 10px 0;" ><span style="margin:0">选择图片</span></a><div class="chosened_img"></div></div>
-						<div class="nps"><a style="display: block;float: right; margin: -2px 10px 0;" class="button add_custom_option"><span style="margin:0">+</span></a></div>
+						<div class="nps"><a style="display: block;width:100px;float: right; margin: -2px 10px 0;" class="button add_custom_option"><span style="margin:0;text-align:center;width:85px;display:inline-block;">+</span></a></div>
 					';
 
                 $this->_custom_option_list_str .= '<th>sku</th><th>qty</th><th>price</th><th>img</th><th>delete</th>';
@@ -397,6 +404,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                 //exit;
             }
         }
+
         $this->_service->save($this->_param, 'catalog/product/index');
         
         $errors = Yii::$service->helper->errors->get();
@@ -421,18 +429,31 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         $this->_param = $request_param[$this->_editFormData];
         $this->_param['attr_group'] = CRequest::param('attr_group');
         $custom_option = CRequest::param('custom_option');
-        //var_dump($custom_option);
+        //var_dump($custom_option);exit;
         $custom_option = $custom_option ? json_decode($custom_option, true) : [];
+        //var_dump($custom_option);exit;
         $custom_option_arr = [];
+        $custom_option_arr2 = [];
         if (is_array($custom_option) && !empty($custom_option)) {
+
             foreach ($custom_option as $one) {
                 $one['qty'] = (int) $one['qty'];
                 $one['price'] = (float) $one['price'];
-                $custom_option_arr[$one['sku']] = $one;
+                $custom_option_arr[$one['sku']] = $one; //通过SKU定义选项的名称
             }
         }
+
+        //清除空选项
+        foreach($custom_option_arr as $key=>$val) {
+             foreach($val as $k=>$v) {
+                 if(!empty($v)) {
+                       $custom_option_arr2[$key][$k] = $v;
+                 }
+             }
+         }
+        $custom_option_arr = $custom_option_arr2;
+
         $this->_param['custom_option'] = $custom_option_arr;
-        //var_dump($this->_param['custom_option']);
         $image_gallery = CRequest::param('image_gallery');
         $image_main = CRequest::param('image_main');
         $save_gallery = [];
