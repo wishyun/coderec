@@ -126,7 +126,6 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                             }else{
                                 $str .= '<option value="'.$k.'">'.$v.'</option>';
                             }
-
                         }
                         $str .= '</select>';
                     }elseif($type == 'inputString'){
@@ -434,20 +433,27 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         $custom_option = $custom_option ? json_decode($custom_option, true) : [];
         //var_dump($custom_option);exit;
         $custom_option_arr = [];
+        $custom_option_arr2 = [];
         if (is_array($custom_option) && !empty($custom_option)) {
 
             foreach ($custom_option as $one) {
                 $one['qty'] = (int) $one['qty'];
                 $one['price'] = (float) $one['price'];
                 $custom_option_arr[$one['sku']] = $one; //通过SKU定义选项的名称
-
             }
         }
-        //var_dump($custom_option_arr);exit;
-        $this->_param['custom_option'] = array_filter($custom_option_arr);
 
-        //var_dump($this->_param['custom_option']);exit;
+        //清除空选项
+        foreach($custom_option_arr as $key=>$val) {
+             foreach($val as $k=>$v) {
+                 if(!empty($v)) {
+                       $custom_option_arr2[$key][$k] = $v;
+                 }
+             }
+         }
+        $custom_option_arr = $custom_option_arr2;
 
+        $this->_param['custom_option'] = $custom_option_arr;
         $image_gallery = CRequest::param('image_gallery');
         $image_main = CRequest::param('image_main');
         $save_gallery = [];
