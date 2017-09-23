@@ -5,6 +5,7 @@
  * @link http://www.fecshop.com/
  * @copyright Copyright (c) 2016 FecShop Software LLC
  * @license http://www.fecshop.com/license/
+ * @fecshop\app\appadmin\theme\base\default\catalog\productinfo\manageredit.php
  */
 use yii\helpers\Html;
 use fec\helpers\CRequest;
@@ -417,12 +418,29 @@ function thissubmit(thiss){
 							$(".custom_option_img_list").slideUp("slow");
 						});
 						
-						
+						/*删除*/
 						jQuery(document).off("click",".deleteCustomList");
 						jQuery(document).on("click",".deleteCustomList",function(){
-							$(this).parent().parent().remove();
-							
+							if(confirm("您确定要删除该条数据吗？")) {
+								$(this).parent().parent().remove();
+							}
 						});
+
+						/*编辑*/
+						jQuery(document).off("click",".editCustomList");
+						jQuery(document).on("click",".editCustomList",function(){
+							$this_parent = $(this).parent().parent();
+							$this_parent.addClass("now_edit");
+
+							$(".custom_option_list table tbody tr.now_edit td").each(function(){
+								rel = $(this).attr('rel');
+								if(rel != undefined){
+									alert(rel);
+								}
+							});
+
+						});
+
 						jQuery(document).off("click",".add_custom_option");
 						jQuery(document).on("click",".add_custom_option",function(){
 							i = 0;

@@ -159,7 +159,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                         $this->_custom_option_list_str .= '<td rel="qty">'.$one['qty'].'</td>';
                         $this->_custom_option_list_str .= '<td rel="price">'.$one['price'].'</td>';
                         $this->_custom_option_list_str .= '<td rel="image"><img style="width:30px;" rel="'.$one['image'].'" src="'.Yii::$service->product->image->getUrl($one['image']).'"/></td>';
-                        $this->_custom_option_list_str .= '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a></td>';
+                        $this->_custom_option_list_str .= '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a><a title="删除"  href="javascript:void(0)" class="btnEdit editCustomList">修改</a></td>';
                         $this->_custom_option_list_str .= '</tr>';
                     }
                 }
