@@ -37,6 +37,7 @@
 								<?php   				endif;  ?>
 							<?php   			endforeach;  ?>
 						<?php   		endif;  ?>
+						<ul style="clear:both;"></ul>
 					</ul>
 				</div>
 				<div class="clear"></div>
