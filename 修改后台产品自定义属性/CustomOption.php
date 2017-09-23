@@ -94,6 +94,7 @@ class CustomOption
                     }
                 }elseif(isset($info['display']['type']) && ($info['display']['type'] == 'inputString')) {
                         foreach($my_arr[$attr] as $key=>$val){
+							$require = isset($info['require']) ? $info['require'] : 0;
                             $t_arr = [
                                   'key' => $val,
                                   'val' => $val,
