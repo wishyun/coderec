@@ -8,7 +8,9 @@
  * @theme\terry\theme01\catalog\product\index\custom_option.php
  */
 ?>
-<?php	if(is_array($items) && !empty($items)):  ?>
+<?php
+//var_dump($items);
+if(is_array($items) && !empty($items)):  ?>
 	<div class="product_options">
 		<input type="hidden" value="" class="product_custom_options"    />
 		<?php 	foreach($items as $attr => $v_info):  ?>

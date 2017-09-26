@@ -97,21 +97,56 @@ return [
                         ],
 
                         'custom_options' => [
-                              //选项
-                              'my_option'      => [
+                              //选项1-英文
+                              'myoption'      => [
                                     'dbtype'    => 'String',  //类型
-                                    'label'     => '选项', // 显示的名字
-                                    'name'      => 'option',   // 在数据库中存在的列名
+                                    'label'     => '选项(英文)', // 显示的名字
+                                    'name'      => 'myoption',   // 在数据库中存在的列名
+                                    'showAsImg' => true, //是否显示
+                                    'display' => [
+                                          'type' => 'inputString',
+                                    ],
+                                    'require' => 0,  // 1代表是必填选项，0代表选填
+                              ],
+
+                              //选项1-韩文
+                              'myoption_ko'      => [
+                                    'dbtype'    => 'String',  //类型
+                                    'label'     => '选项2(韩文)', // 显示的名字
+                                    'name'      => 'myoption_ko',   // 在数据库中存在的列名
                                     'showAsImg' => true, //是否显示
                                     'display' => [
                                           'type' => 'inputString',
                                     ],
                                     'require' => 1,  // 1代表是必填选项，0代表选填
                               ],
-                              //款式
-                              'my_style'      => [
+                              //选项2-英文
+                              'myoption2'      => [
                                     'dbtype'    => 'String',  //类型
-                                    'label'     => '选项2', // 显示的名字
+                                    'label'     => '选项2(英文)', // 显示的名字
+                                    'name'      => 'myoption2',   // 在数据库中存在的列名
+                                    'showAsImg' => true, //是否显示
+                                    'display' => [
+                                          'type' => 'inputString',
+                                    ],
+                                    'require' => 0,  // 1代表是必填选项，0代表选填
+                              ],
+
+                              //选项2-韩文
+                              'myoption2_ko'      => [
+                                    'dbtype'    => 'String',  //类型
+                                    'label'     => '选项(韩文)', // 显示的名字
+                                    'name'      => 'myoption2_ko',   // 在数据库中存在的列名
+                                    'showAsImg' => true, //是否显示
+                                    'display' => [
+                                          'type' => 'inputString',
+                                    ],
+                                    'require' => 1,  // 1代表是必填选项，0代表选填
+                              ],
+                              //款式1-英文
+                              'mystyle'      => [
+                                    'dbtype'    => 'String',  //类型
+                                    'label'     => '款式(英文)', // 显示的名字
                                     'name'      => 'style',   // 在数据库中存在的列名
                                     'showAsImg' => true, //是否显示
                                     'display' => [
@@ -119,8 +154,20 @@ return [
                                     ],
                                     'require' => 1,  // 1代表是必填选项，0代表选填
                               ],
+                              //款式1-韩文
+                              'mystyle_ko'      => [
+                                    'dbtype'    => 'String',  //类型
+                                    'label'     => '款式(韩文)', // 显示的名字
+                                    'name'      => 'style',   // 在数据库中存在的列名
+                                    'showAsImg' => true, //是否显示
+                                    'display' => [
+                                          'type' => 'inputString',
+                                    ],
+                                    'require' => 1,  // 1代表是必填选项，0代表选填
+                              ],
+
                               //尺寸
-                              'my_size'      => [
+                              'mysize'      => [
                                     'dbtype'     => 'String',
                                     'label'      => 'My Size',
                                     'name'       => 'size',
@@ -141,7 +188,7 @@ return [
 
                               ],
 
-                              'my_color'      => [
+                              'mycolor'      => [
                                     'dbtype'    => 'String',  //类型
                                     'label'     => 'My Color', // 显示的名字
                                     'name'      => 'color',      // 在数据库中存在的列名

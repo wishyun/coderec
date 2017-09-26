@@ -27,12 +27,38 @@ class CustomOption
     public function getLastData()
     {
         $items = $this->getAllItems();
-        //var_dump($items);exit;
+
+        $getlanguge = explode('_',Yii::$app->language);
+        $lang = $getlanguge[0] == 'en' || $getlanguge[0] == 'es'?false:$getlanguge[0];
+
+            foreach($items as $key => $val) {
+               if(!empty($lang)) {
+                   if (strpos($key, "_")) {
+                       $newkey = explode("_", $key);
+                       $_key = $newkey[0];
+                       $_key2 = $newkey[1];
+                       if ($key == $_key . "_" . $_key2) {
+                           if (!empty($lang)) {
+                               unset($items[$_key]);
+                           }
+                       }
+                   }
+               }else{
+                   $s_attr = explode("_",$key);
+                   if(!empty($s_attr[1])) {
+                        if(in_array($s_attr[1], ['ko', 'cn', 'fr', 'de'])) {
+                            unset($items[$s_attr[0]."_".$s_attr[1]]);
+                        }
+                    }
+               }
+            }
+
+        //var_dump($items);
         return [
-            'items' => $items,
-            'product_id'        => $this->product_id,
-            'custom_option_arr' => json_encode($this->_custom_option_arr),
-            'middle_img_width'  => $this->middle_img_width,
+              'items' => $items,
+              'product_id'        => $this->product_id,
+              'custom_option_arr' => json_encode($this->_custom_option_arr),
+              'middle_img_width'  => $this->middle_img_width,
         ];
     }
     /**
@@ -78,8 +104,8 @@ class CustomOption
                         foreach ($info['display']['data'] as $key=>$val) {
                             if (is_array($my_arr[$attr]) && in_array($key, $my_arr[$attr])) {
                                 $t_arr = [
-                                    'key' => $key,
-                                    'val' => $val,
+                                      'key' => $key,
+                                      'val' => $val,
                                 ];
                                 $require = isset($info['require']) ? $info['require'] : 0;
                                 if (isset($info['showAsImg']) && $info['showAsImg']) {
@@ -93,18 +119,18 @@ class CustomOption
                         }
                     }
                 }elseif(isset($info['display']['type']) && ($info['display']['type'] == 'inputString')) {
-						$my_arr2 = array_unique($my_arr[$attr]);
-                        foreach($my_arr2 as $key=>$val){
-							if (is_array($my_arr2) && !empty($val)) {
-								$require = isset($info['require']) ? $info['require'] : 0;
-								$t_arr = [
-									  'key' => $val,
-									  'val' => $val,
-								];
-								$arr[$attr]['info'][] = $t_arr;
-								$arr[$attr]['require'] = $require;
-							}
+                    $my_arr2 = array_unique($my_arr[$attr]);
+                    foreach($my_arr2 as $key=>$val){
+                        if (is_array($my_arr2) && !empty($val)) {
+                            $require = isset($info['require']) ? $info['require'] : 0;
+                            $t_arr = [
+                                  'key' => $val,
+                                  'val' => $val,
+                            ];
+                            $arr[$attr]['info'][] = $t_arr;
+                            $arr[$attr]['require'] = $require;
                         }
+                    }
                 }
             }
         }

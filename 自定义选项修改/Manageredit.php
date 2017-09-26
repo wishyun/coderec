@@ -38,8 +38,8 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         /**
          * 通过Yii::mapGet() 得到重写后的class类名以及对象。Yii::mapGet是在文件@fecshop\yii\Yii.php中
          */
-        $this->_attrBlockName = Yii::mapGetName($this->_attrBlockName);  
-        
+        $this->_attrBlockName = Yii::mapGetName($this->_attrBlockName);
+
         $this->_saveUrl = CUrl::getUrl('catalog/productinfo/managereditsave');
         parent::init();
         $product_id = $this->_param[$this->_primaryKey];
@@ -48,7 +48,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
             $qty = Yii::$service->product->stock->getProductFlatQty($product_id);
             $this->_one['qty'] = $qty ;
         }
-        
+
         $this->_attr = new $this->_attrBlockName($this->_one);
         //$this->_param		= $request_param[$this->_editFormData];
     }
@@ -73,26 +73,26 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
     public function getLastData()
     {
         return [
-            'baseInfo'          => $this->getBaseInfo(),
-            'priceInfo'         => $this->getPriceInfo(),
-            'tier_price'        => $this->_one['tier_price'],
-            'metaInfo'          => $this->getMetaInfo(),
-            'groupAttr'         => $this->getGroupAttr(),
-            'descriptionInfo'   => $this->getDescriptionInfo(),
-            'attrGroup'         => $this->_attr->getProductAttrGroupSelect(),
-            'primaryInfo'       => $this->getCurrentProductPrimay(),
-            'img_html'          => $this->getImgHtml(),
-            'custom_option'     => $this->_one['custom_option'],
-            'product_id'        => $this->_one[Yii::$service->product->getPrimaryKey()],
+              'baseInfo'          => $this->getBaseInfo(),
+              'priceInfo'         => $this->getPriceInfo(),
+              'tier_price'        => $this->_one['tier_price'],
+              'metaInfo'          => $this->getMetaInfo(),
+              'groupAttr'         => $this->getGroupAttr(),
+              'descriptionInfo'   => $this->getDescriptionInfo(),
+              'attrGroup'         => $this->_attr->getProductAttrGroupSelect(),
+              'primaryInfo'       => $this->getCurrentProductPrimay(),
+              'img_html'          => $this->getImgHtml(),
+              'custom_option'     => $this->_one['custom_option'],
+              'product_id'        => $this->_one[Yii::$service->product->getPrimaryKey()],
             //'editBar' 	    => $this->getEditBar(),
             //'textareas'	    => $this->_textareas,
             //'lang_attr'	    => $this->_lang_attr,
-            'saveUrl'           => $this->_saveUrl,
-            'operate'           => Yii::$app->request->get('operate'),
-            'custom_option_add' => $this->getCustomOptionAdd(),
-            'custom_option_img' => $this->getCustomOpImgHtml(),
-            'custom_option_list'=> $this->_custom_option_list_str,
-            'relation'          => $this->getRelationInfo(),
+              'saveUrl'           => $this->_saveUrl,
+              'operate'           => Yii::$app->request->get('operate'),
+              'custom_option_add' => $this->getCustomOptionAdd(),
+              'custom_option_img' => $this->getCustomOpImgHtml(),
+              'custom_option_list'=> $this->_custom_option_list_str,
+              'relation'          => $this->getRelationInfo(),
         ];
     }
 
@@ -103,7 +103,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         if ($currentAttrGroup) {
             $attr_group = $currentAttrGroup;
         }
-        
+
         $str = '';
         $this->_custom_option_list_str = '';
         if ($attr_group) {
@@ -146,7 +146,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                 //$this->_custom_option_list_str .= '</table>';
                 $this->_custom_option_list_str .= '<tbody>';
                 //echo '<br><br>';
-                
+
                 $custom_option = $this->_one['custom_option'];
                 if (is_array($custom_option) && !empty($custom_option)) {
                     foreach ($custom_option  as $one) {
@@ -158,8 +158,8 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                         $this->_custom_option_list_str .= '<td class="custom_option_sku" rel="sku">'.$one['sku'].'</td>';
                         $this->_custom_option_list_str .= '<td rel="qty">'.$one['qty'].'</td>';
                         $this->_custom_option_list_str .= '<td rel="price">'.$one['price'].'</td>';
-                        $this->_custom_option_list_str .= '<td rel="image"><img style="width:30px;" rel="'.$one['image'].'" src="'.Yii::$service->product->image->getUrl($one['image']).'"/></td>';
-                        $this->_custom_option_list_str .= '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a><a title="删除"  href="javascript:void(0)" class="btnEdit editCustomList">修改</a></td>';
+                        $this->_custom_option_list_str .= '<td class="cu_image" rel="image"><img style="width:30px;" rel="'.$one['image'].'" src="'.Yii::$service->product->image->getUrl($one['image']).'"/></td>';
+                        $this->_custom_option_list_str .= '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a><a title="修改"  href="javascript:void(0)" class="btnEdit editCustomList">修改</a></td>';
                         $this->_custom_option_list_str .= '</tr>';
                     }
                 }
@@ -249,7 +249,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                 //var_dump($custom_option);
             }
         }
-        
+
         if (!empty($editArr)) {
             $editBar = $this->getEditBar($editArr);
 
@@ -268,14 +268,14 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
             $gallery_image = $this->_one['image']['gallery'];
         }
         $str =
-        '<div>
+              '<div>
 			<table class="list productimg" width="100%" >
 				<thead>
 					<tr>
 						<td>图片</td>
 						<td>label</td>
 						<td>sort_order</td>
-						
+
                         <td>主图</td>
                         <td>橱窗图</td>
 						<td>描述图</td>
@@ -286,13 +286,13 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         if (!empty($main_image) && is_array($main_image)) {
             $is_thumbnails = $main_image['is_thumbnails'] ? $main_image['is_thumbnails'] : 1;
             $is_detail = $main_image['is_detail'] ? $main_image['is_detail'] : 1;
-            
+
             $str .= '<tr class="p_img" rel="1" style="border-bottom:1px solid #ccc;">
 						<td style="width:120px;text-align:center;"><img  rel="'.$main_image['image'].'" style="width:100px;height:100px;" src="'.Yii::$service->product->image->getUrl($main_image['image']).'"></td>
 						<td style="width:220px;text-align:center;"><input style="height:18px;width:200px;" type="text" class="image_label" name="image_label"  value="'.$main_image['label'].'" /></td>
 						<td style="width:220px;text-align:center;"><input style="height:18px;width:200px;" type="text" class="sort_order"  name="sort_order" value="'.$main_image['sort_order'].'"  /></td>
 						<td style="width:30px;text-align:center;"><input type="radio" name="image" checked  value="'.$main_image['image'].'" /></td>
-						
+
                         <td style="width:220px;text-align:center;">
                             <select name="is_thumbnails" class="is_thumbnails">
                                 '.$this->getYesNoOptions($is_thumbnails).'
@@ -303,17 +303,17 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                                 '.$this->getYesNoOptions($is_detail).'
                             </select>
                         </td>
-                        
+
                         <td style="padding:0 0 0 20px;"><a class="delete_img btnDel" href="javascript:void(0)">删除</a></td>
 					</tr>';
         }
         if (!empty($gallery_image) && is_array($gallery_image)) {
             $i = 2;
-            
+
             foreach ($gallery_image as $gallery) {
                 $is_thumbnails = $gallery['is_thumbnails'] ? $gallery['is_thumbnails'] : 1;
                 $is_detail = $gallery['is_detail'] ? $gallery['is_detail'] : 1;
-            
+
                 $str .= '<tr class="p_img" rel="'.$i.'" style="border-bottom:1px solid #ccc;">
 									<td style="width:120px;text-align:center;"><img  rel="'.$gallery['image'].'" style="width:100px;height:100px;" src="'.Yii::$service->product->image->getUrl($gallery['image']).'"></td>
 									<td style="width:220px;text-align:center;"><input style="height:18px;width:200px;" type="text" class="image_label" name="image_label"  value="'.$gallery['label'].'" /></td>
@@ -341,7 +341,7 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
 
         return $str;
     }
-    
+
     public function getYesNoOptions($val){
         if($val == 1){
             return '
@@ -406,18 +406,18 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         }
 
         $this->_service->save($this->_param, 'catalog/product/index');
-        
+
         $errors = Yii::$service->helper->errors->get();
         if (!$errors) {
             echo  json_encode([
-                'statusCode'=>'200',
-                'message'=>'save success',
+                  'statusCode'=>'200',
+                  'message'=>'save success',
             ]);
             exit;
         } else {
             echo  json_encode([
-                'statusCode'=>'300',
-                'message'=>$errors,
+                  'statusCode'=>'300',
+                  'message'=>$errors,
             ]);
             exit;
         }
@@ -445,12 +445,12 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
 
         //清除空选项
         foreach($custom_option_arr as $key=>$val) {
-             foreach($val as $k=>$v) {
-                 if(!empty($v)) {
-                       $custom_option_arr2[$key][$k] = $v;
-                 }
-             }
-         }
+            foreach($val as $k=>$v) {
+                if(!empty($v)) {
+                    $custom_option_arr2[$key][$k] = $v;
+                }
+            }
+        }
         $custom_option_arr = $custom_option_arr2;
 
         $this->_param['custom_option'] = $custom_option_arr;
@@ -483,11 +483,11 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                     if (!empty($one)) {
                         list($gallery_image, $gallery_label, $gallery_sort_order,$gallery_is_thumbnails,$gallery_is_detail) = explode('#####', $one);
                         $save_gallery[] = [
-                            'image'         => $gallery_image,
-                            'label'         => $gallery_label,
-                            'sort_order'    => $gallery_sort_order,
-                            'is_thumbnails' => $gallery_is_thumbnails,
-                            'is_detail'     => $gallery_is_detail,
+                              'image'         => $gallery_image,
+                              'label'         => $gallery_label,
+                              'sort_order'    => $gallery_sort_order,
+                              'is_thumbnails' => $gallery_is_thumbnails,
+                              'is_detail'     => $gallery_is_detail,
                         ];
                     }
                 }
@@ -498,11 +498,11 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         if ($image_main) {
             list($main_image, $main_label, $main_sort_order,$main_is_thumbnails,$main_is_detail) = explode('#####', $image_main);
             $save_main = [
-                'image'        => $main_image,
-                'label'        => $main_label,
-                'sort_order'    => $main_sort_order,
-                'is_thumbnails'    => $main_is_thumbnails,
-                'is_detail'    => $main_is_detail,
+                  'image'        => $main_image,
+                  'label'        => $main_label,
+                  'sort_order'    => $main_sort_order,
+                  'is_thumbnails'    => $main_is_thumbnails,
+                  'is_detail'    => $main_is_detail,
             ];
             $this->_param['image']['main'] = $save_main;
         }
@@ -592,8 +592,8 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
                         $tier_qty = (int) $tier_qty;
                         $tier_price = (float) $tier_price;
                         $tier_price_arr[] = [
-                            'qty'    => $tier_qty,
-                            'price'    => $tier_price,
+                              'qty'    => $tier_qty,
+                              'price'    => $tier_price,
                         ];
                     }
                 }
@@ -616,14 +616,14 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
         $errors = Yii::$service->helper->errors->get();
         if (!$errors) {
             echo  json_encode([
-                'statusCode'=>'200',
-                'message'=>'remove data success',
+                  'statusCode'=>'200',
+                  'message'=>'remove data success',
             ]);
             exit;
         } else {
             echo  json_encode([
-                'statusCode'=>'300',
-                'message'=>$errors,
+                  'statusCode'=>'300',
+                  'message'=>$errors,
             ]);
             exit;
         }
