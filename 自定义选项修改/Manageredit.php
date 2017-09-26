@@ -137,10 +137,10 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
 						<div class="nps"><span>Qty:</span><input style="width:40px;" type="text" class="custom_option_qty"  value="" /></div>
 						<div class="nps"><span>Price:</span><input  style="width:40px;" type="text" class="custom_option_price"  value="" /></div>
 						<div class="nps" style="width:220px;"><a class=" button chose_custom_op_img" style="display: block;float: left; margin: -2px 10px 0;" ><span style="margin:0">选择图片</span></a><div class="chosened_img"></div></div>
-						<div class="nps"><a style="display: block;width:100px;float: right; margin: -2px 10px 0;" class="button add_custom_option"><span style="margin:0;text-align:center;width:85px;display:inline-block;">+</span></a></div>
+						<div class="nps"><a style="display: block;width:100px;float: right; margin: -2px 10px 0;" class="button add_custom_option"><span style="margin:0;text-align:center;width:85px;display:inline-block;">添加属性</span></a></div>
 					';
 
-                $this->_custom_option_list_str .= '<th>sku</th><th>qty</th><th>price</th><th>img</th><th>delete</th>';
+                $this->_custom_option_list_str .= '<th>SKU</th><th>数量</th><th>价格(+)</th><th>图片</th><th>操作</th>';
                 $this->_custom_option_list_str .= '<tr><thead>';
                 //$this->_custom_option_list_str .= '<tbody></tbody>';
                 //$this->_custom_option_list_str .= '</table>';

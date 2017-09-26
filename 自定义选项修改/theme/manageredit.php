@@ -469,9 +469,29 @@ use fecadmin\models\AdminRole;
 								if($this_parent.hasClass("now_edit")) {
 									if(confirm("确定完成修改吗？")) {
 										$this_parent.removeClass("now_edit");
+										general_sku = '';
 										$this_parent.find('td').each(function() {
+
 											rel = $(this).attr('rel');
-											if(rel != 'sku') {
+
+											if(rel.indexOf("_") <= 0) {
+												val2 = $(this).find("input").val().replace(/\s+/g, "");
+												if(val2.length != 0) {
+													if(!general_sku) {
+														general_sku = val2;
+													}else{
+														general_sku += "-"+val2;
+													}
+												}
+											}
+
+											if(rel == 'sku'){
+												$(this).html('');
+												cls = $(this).find("input").attr('class');
+												$(this).html(general_sku.toLowerCase());
+												$(this).attr('class', cls);
+
+											}else{
 												if(rel != 'image'){
 													val = $(this).find("input").val().replace(/\s+/g, "");
 													$(this).html(val);
@@ -482,7 +502,9 @@ use fecadmin\models\AdminRole;
 											}
 
 										});
+
 									}
+
 								}else {
 									if($this_parent.parent().find('tr').hasClass('now_edit')) {
 
@@ -501,7 +523,11 @@ use fecadmin\models\AdminRole;
 												img_src = $(this).find('img').attr('src');
 
 											}
-											if(rel != 'sku') {
+											if(rel == 'sku') {
+												cls = $(this).attr('class');
+												$(this).html('<input type="text" class="'+cls+'" attr="'+rel+'" value="" />');
+
+											}else{
 												if(img_rel && img_src){
 													$(this).html('<img style="width:30px;height:30px;display:block;float:left;" rel="'+img_rel+'" src="'+img_src+'"/><a class="button btnadimg chose_custom_op_img" style="display:block;float:left; margin:-2px 10px 0 10px;"><span style="margin:0">选择图片</span></a>');
 												}else{
@@ -557,7 +583,7 @@ use fecadmin\models\AdminRole;
 								$str += '<td class="custom_option_sku" rel="sku">'+custom_option_sku+'</td>';
 								custom_option_qty = $(".custom_option_qty").val();
 								if(!custom_option_qty){
-									custom_option_qty = 99999;
+									custom_option_qty = 9999;
 								}
 								$str += '<td rel="qty">'+custom_option_qty+'</td>';
 								custom_option_price = $(".custom_option_price").val();
