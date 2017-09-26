@@ -535,16 +535,20 @@ use fecadmin\models\AdminRole;
 									 i = 1;
 									 alert("仅能使用英文或数字！"+val);
 									 }*/
-									//生成SKU-有下划线的不录入到SKU
+									/*
+									 * 生成SKU
+									 * 有下划线的不添加到SKU
+									 */
 									$str += '<td rel="'+attr+'">'+val+'</td>';
-									if($(this).attr("atr").indexOf("_") <= 0){
-										val2 = $(this).val();
-									}
-									val2 = val2.replace(/\s+/g, "");
-									if(!general_sku){
-										general_sku = val2;
-									}else{
-										general_sku += "-"+val2;
+									if($(this).attr("atr").indexOf("_") <= 0) {
+										val2 = $(this).val().replace(/\s+/g, "");
+										if(val2.length != 0) {
+											if(!general_sku){
+												general_sku = val2;
+											}else{
+												general_sku += "-"+val2;
+											}
+										}
 									}
 								});
 								custom_option_sku = general_sku;
