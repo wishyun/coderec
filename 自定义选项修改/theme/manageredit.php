@@ -573,7 +573,7 @@ use fecadmin\models\AdminRole;
 									alert("必须要选择一张图片");
 								}
 								$str += '<td class="cu_image" rel="image"><img style="width:30px;" rel="'+chosened_img_rel+'" src="'+chosened_img_src+'"/></td>';
-								$str += '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a></td><a title="修改"  href="javascript:void(0)" class="btnEdit editCustomList">修改</a></td>'
+								$str += '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a><a title="修改"  href="javascript:void(0)" class="btnEdit editCustomList">修改</a></td>'
 								//检查这个sku是否已经存在
 								$(".custom_option_sku").each(function(){
 									sku = $(this).html();
