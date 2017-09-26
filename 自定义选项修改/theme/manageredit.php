@@ -570,16 +570,16 @@ use fecadmin\models\AdminRole;
 								chosened_img_rel = $(".chosened_img img").attr('rel');
 								if(!chosened_img_src || !chosened_img_rel){
 									i = 1;
-									alert("you must chose a image");
+									alert("必须要选择一张图片");
 								}
-								$str += '<td rel="image"><img style="width:30px;" rel="'+chosened_img_rel+'" src="'+chosened_img_src+'"/></td>';
-								$str += '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a></td>'
+								$str += '<td class="cu_image" rel="image"><img style="width:30px;" rel="'+chosened_img_rel+'" src="'+chosened_img_src+'"/></td>';
+								$str += '<td><a title="删除"  href="javascript:void(0)" class="btnDel deleteCustomList">删除</a></td><a title="修改"  href="javascript:void(0)" class="btnEdit editCustomList">修改</a></td>'
 								//检查这个sku是否已经存在
 								$(".custom_option_sku").each(function(){
 									sku = $(this).html();
 									if(sku == custom_option_sku){
 										i = 1;
-										alert('this custom_option sku is exist');
+										alert('该属性已经添加');
 									}
 								});
 								if(!i){
