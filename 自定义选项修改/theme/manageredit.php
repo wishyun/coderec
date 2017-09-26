@@ -113,7 +113,7 @@ use fecadmin\models\AdminRole;
 
 		if(!confirm("确定修改吗？")) {return false;}
 
-		if($('.now_edit').attr('class') == 'now_edit') {
+		if($('.custom_option_list').find('.now_edit').attr('class') == 'now_edit') {
 			alert('还有未完成的编辑！');
 			$('.now_edit').find('input').css("border","1px #ff4300 solid");
 			return false;
@@ -225,7 +225,7 @@ use fecadmin\models\AdminRole;
 					</ul>
 				</div>
 			</div>
-			<div class="tabsContent" style="height:450px;overflow:auto;">
+			<div class="tabsContent" style="height:780px;overflow:auto;">
 				<div>
 					<input type="hidden"  value="<?=  $product_id; ?>" size="30" name="product_id" class="textInput ">
 
