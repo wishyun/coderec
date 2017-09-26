@@ -474,6 +474,10 @@ use fecadmin\models\AdminRole;
 
 											rel = $(this).attr('rel');
 
+											if(rel == 'image'){
+												$(this).find('.btnadimg').remove();
+											}
+
 											if(rel.indexOf("_") <= 0) {
 												val2 = $(this).find("input").val().replace(/\s+/g, "");
 												if(val2.length != 0) {
@@ -492,12 +496,9 @@ use fecadmin\models\AdminRole;
 												$(this).attr('class', cls);
 
 											}else{
-												if(rel != 'image'){
-													val = $(this).find("input").val().replace(/\s+/g, "");
-													$(this).html(val);
-												}else{
-													$(this).find('.btnadimg').remove();
-												}
+												val = $(this).find("input").val().replace(/\s+/g, "");
+												$(this).html(val);
+
 
 											}
 
@@ -531,7 +532,7 @@ use fecadmin\models\AdminRole;
 												if(img_rel && img_src){
 													$(this).html('<img style="width:30px;height:30px;display:block;float:left;" rel="'+img_rel+'" src="'+img_src+'"/><a class="button btnadimg chose_custom_op_img" style="display:block;float:left; margin:-2px 10px 0 10px;"><span style="margin:0">选择图片</span></a>');
 												}else{
-													$(this).html('<input type="text" class="in'+rel+'" attr="'+rel+'" value="'+attr+'" />');
+													$(this).html('<input type="text" class="in'+rel+'" alt="'+rel+'" value="'+attr+'" />');
 												}
 											}
 										}
