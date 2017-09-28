@@ -307,6 +307,10 @@ class Index
         $custom_option_info_arr = [];
         $custom_option = isset($product_one['custom_option']) ? $product_one['custom_option'] : '';
         $custom_option_sku = $product_one['custom_option_sku'];
+
+        $getlanguge = explode('_',Yii::$app->language);
+        $lang = $getlanguge[0] == 'en' || $getlanguge[0] == 'es'?false:$getlanguge[0];
+
         if (isset($custom_option[$custom_option_sku]) && !empty($custom_option[$custom_option_sku])) {
             $custom_option_info = $custom_option[$custom_option_sku];
             foreach ($custom_option_info as $attr=>$val) {
@@ -315,6 +319,28 @@ class Index
                     $attr = ucfirst($attr);
                     $custom_option_info_arr[$attr] = $val;
                 }
+                /***add***/
+                if(!empty($lang)) {
+                    //判断属性中有没有包含语言简码字符
+                    if(strpos($attr, $lang)) {
+                        $newattr = explode(" ", $attr);
+                        $_attr = $newattr[0];
+                        $_attr2 = $newattr[1];
+                        if ($attr == $_attr . " " . $_attr2) {
+                            if (!empty($lang)) {
+                                unset($custom_option_info_arr[$_attr]);
+                            }
+                        }
+                    }
+                }else{
+                    $s_attr = explode(" ",$attr);
+                    if(!empty($s_attr[1])) {
+                        if(in_array($s_attr[1], ['ko', 'cn', 'fr', 'de'])) {
+                            unset($custom_option_info_arr[$s_attr[0]." ".$s_attr[1]]);
+                        }
+                    }
+                }
+                /***add***/
             }
         }
 
