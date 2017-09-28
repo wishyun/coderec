@@ -26,6 +26,42 @@ class Item extends Service
     public function __construct(){
         list($this->_itemModelName,$this->_itemModel) = \Yii::mapGet($this->_itemModelName);  
     }
+
+    /**
+     * @param $custom_option
+     * @return mixed
+     */
+    public function getNewCustomOption($custom_option)
+    {
+        $getlanguge = explode('_',Yii::$app->language);
+        $lang = $getlanguge[0] == 'en' || $getlanguge[0] == 'es'?false:$getlanguge[0];
+        if(!empty($custom_option) && is_array($custom_option)){
+            foreach($custom_option as $key => $opt){
+                foreach($opt as $attr => $val){
+                    if(!empty($lang)) {
+                        if (strpos($attr, $lang)) {
+                            $newattr = explode("_", $attr);
+                            $_attr = $newattr[0];
+                            $_attr2 = $newattr[1];
+                            if ($attr == $_attr . "_" . $_attr2) {
+                                if (!empty($lang)) {
+                                    unset($custom_option[$key][$_attr]);
+                                }
+                            }
+                        }
+                    }else{
+                        $s_attr = explode("_",$attr);
+                        if(!empty($s_attr[1])) {
+                            if(in_array($s_attr[1], ['ko', 'cn', 'fr', 'de'])) {
+                                unset($custom_option[$s_attr[0]."_".$s_attr[1]]);
+                            }
+                        }
+                    }
+                }
+            }
+            return $custom_option;
+        }
+    }
     /**
      * @property $order_id | Int
      * @property $onlyFromTable | 从数据库取出不做处理
@@ -43,15 +79,13 @@ class Item extends Service
         foreach ($items as $k=>$one) {
             $product_id = $one['product_id'];
             $product_one = Yii::$service->product->getByPrimaryKey($product_id);
-
             $productSpuOptions = $this->getProductSpuOptions($product_one);
             //var_dump($productSpuOptions);
             $items[$k]['spu_options'] = $productSpuOptions;
-            $items[$k]['custom_option'] = $product_one['custom_option'];
+            $items[$k]['custom_option'] = $this->getNewCustomOption($product_one['custom_option']);
             $items[$k]['custom_option_info'] = $this->getProductOptions($items[$k]);
             $items[$k]['image'] = $this->getProductImage($product_one, $one);
         }
-        
         return $items;
     }
 
