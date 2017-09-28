@@ -283,12 +283,38 @@ class Review
         $custom_option_sku = $product_one['custom_option_sku'];
         if (isset($custom_option[$custom_option_sku]) && !empty($custom_option[$custom_option_sku])) {
             $custom_option_info = $custom_option[$custom_option_sku];
+
+            $getlanguge = explode('_',Yii::$app->language);
+            $lang = $getlanguge[0] == 'en' || $getlanguge[0] == 'es'?false:$getlanguge[0];
+
             foreach ($custom_option_info as $attr=>$val) {
                 if (!in_array($attr, ['qty', 'sku', 'price', 'image'])) {
                     $attr = str_replace('_', ' ', $attr);
                     $attr = ucfirst($attr);
                     $custom_option_info_arr[$attr] = $val;
                 }
+                /******/
+                if(!empty($lang)) {
+                    if (strpos($attr, $lang)) {
+                        $newattr = explode(" ", $attr);
+                        $_attr = $newattr[0];
+                        $_attr2 = $newattr[1];
+                        if ($attr == $_attr . " " . $_attr2) {
+                            if (!empty($lang)) {
+                                unset($custom_option_info_arr[$_attr]);
+                            }
+                        }
+                    }
+                }else{
+
+                    $s_attr = explode(" ",$attr);
+                    if(!empty($s_attr[1])) {
+                        if(in_array($s_attr[1], ['ko', 'cn', 'fr', 'de'])) {
+                            unset($custom_option_info_arr[$s_attr[0]." ".$s_attr[1]]);
+                        }
+                    }
+                }
+                /******/
             }
         }
 
