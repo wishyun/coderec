@@ -89,17 +89,20 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
             //'lang_attr'	    => $this->_lang_attr,
               'saveUrl'           => $this->_saveUrl,
               'operate'           => Yii::$app->request->get('operate'),
-              'custom_option_add' => $this->getCustomOptionAdd(),
+              'custom_option_add' => $this->getCustomOptionAdd('all'),
               'custom_option_img' => $this->getCustomOpImgHtml(),
               'custom_option_list'=> $this->_custom_option_list_str,
               'relation'          => $this->getRelationInfo(),
         ];
     }
 
-    public function getCustomOptionAdd()
+    public function getCustomOptionAdd($all)
     {
         $attr_group = $this->_one['attr_group'];
         $currentAttrGroup = CRequest::param('attr_group');
+        if($all){
+            $attr_group = $all;
+        }
         if ($currentAttrGroup) {
             $attr_group = $currentAttrGroup;
         }

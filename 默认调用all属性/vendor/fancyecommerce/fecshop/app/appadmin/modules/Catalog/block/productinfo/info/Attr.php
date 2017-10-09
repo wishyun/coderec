@@ -20,7 +20,7 @@ use Yii;
  */
 class Attr
 {
-    protected $_currentAttrGroup;
+    protected $_currentAttrGroup = 'all';
     protected $_attrInfo;
     /**
      * 为了可以使用rewriteMap，use 引入的文件统一采用下面的方式，通过Yii::mapGet()得到className和Object
@@ -41,7 +41,7 @@ class Attr
         } elseif (isset($one['attr_group']) && $one['attr_group']) {
             $this->_currentAttrGroup = $one['attr_group'];
         } else {
-            $this->_currentAttrGroup = Yii::$service->product->getDefaultAttrGroup();
+            //$this->_currentAttrGroup = Yii::$service->product->getDefaultAttrGroup();
         }
 
         Yii::$service->product->addGroupAttrs($this->_currentAttrGroup);
@@ -85,7 +85,7 @@ class Attr
     public function getRelationInfo()
     {
         return [
-            [
+        /*    [
                 'label'=>'相关产品sku（逗号隔开）',
                 'name'=>'relation_sku',
                 'display'=>[
@@ -93,7 +93,7 @@ class Attr
 
                 ],
                 'require' => 0,
-            ],
+            ], */
 
             [
                 'label'=>'买了还买sku（逗号隔开）',
@@ -104,14 +104,14 @@ class Attr
                 ],
                 'require' => 0,
             ],
-
+/*
             [
                 'label'=>'看了还看sku（逗号隔开）',
                 'name'=>'see_also_see_sku',
                 'display'=>[
                     'type' => 'inputString',
 
-                ],
+                ], */
                 'require' => 0,
             ],
 
@@ -243,14 +243,14 @@ class Attr
     public function getPriceInfo()
     {
         return [
-            [
+           /* [
                 'label'=>'成本价格',
                 'name'=>'cost_price',
                 'display'=>[
                     'type' => 'inputString',
                 ],
                 'require' => 0,
-            ],
+            ], */
             [
                 'label'=>'销售价格',
                 'name'=>'price',
